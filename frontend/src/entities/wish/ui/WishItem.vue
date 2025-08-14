@@ -1,21 +1,27 @@
 <script setup lang="ts">
+import { Wish } from '../model/types';
 
+const {
+    wish
+} = defineProps<{
+    wish: Wish
+}>();
 </script>
 
 <template>
   <div>
     <v-card :to="'/wish/1'" class="m-4">
         <v-img 
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" 
+            :src="wish.image" 
             height="200px" 
             cover
         ></v-img>
  
         <v-card-title>
-            Wish
+            {{ wish.title }}
         </v-card-title>
         <v-card-text>
-            price
+            {{ wish.price }}
         </v-card-text>
         <v-card-actions>
             <v-btn>Book</v-btn>
