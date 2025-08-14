@@ -1,21 +1,23 @@
 <template>
   <v-container class="py-10">
-    <v-card class="pa-6" elevation="2">
-      <v-card-title class="text-h5">Hello from Backend</v-card-title>
-      <v-card-text>
-        <div v-if="loading">Loading...</div>
-        <div v-else>{{ message }}</div>
-      </v-card-text>
-    </v-card>
+    <v-btn @click="dialog = true" class="mb-4">Add Wish</v-btn>
+    <User />
+    <WishList class="mt-4"/>
+
+    <v-dialog v-model="dialog" width="500">
+      <AddWishForm />
+    </v-dialog>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-
+import { User } from '@entities/user'
+import { WishList } from '@entities/wish'
+import { AddWishForm } from '@features/add-wish'
 const message = ref<string>('')
 const loading = ref<boolean>(true)
-
+const dialog = ref<boolean>(false)
 onMounted(async () => {
   try {
     const res = await fetch('/api/hello')
