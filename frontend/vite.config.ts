@@ -7,6 +7,13 @@ export default defineConfig({
 	server: {
 		port: 5173,
 		host: '0.0.0.0',
+		watch: {
+			usePolling: true
+		},
+		hmr: {
+			host: 'localhost',
+			port: 5173
+		},
 		proxy: {
 			'/api': {
 				target: 'http://nginx:80',

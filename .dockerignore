@@ -1,0 +1,21 @@
+# VCS
+.git
+.gitignore
+
+# Node
+node_modules
+**/node_modules
+frontend/dist
+frontend/.vite
+
+# Editor
+.vscode
+.idea
+.DS_Store
+
+# Logs
+*.log
+logs
+
+# Others
+.env
