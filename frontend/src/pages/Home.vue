@@ -1,20 +1,8 @@
-<template>
-  <v-container class="py-10">
-    <v-btn @click="dialog = true" class="mb-4">Add Wish</v-btn>
-    <User />
-    <WishList class="mt-4"/>
-
-    <v-dialog v-model="dialog" width="500">
-      <AddWishForm />
-    </v-dialog>
-  </v-container>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { User } from '@entities/user'
 import { WishList } from '@entities/wish'
-import { AddWishForm } from '@features/add-wish'
+import { EditWishForm } from '@features/edit-wish'
 const message = ref<string>('')
 const loading = ref<boolean>(true)
 const dialog = ref<boolean>(false)
@@ -30,3 +18,15 @@ onMounted(async () => {
   }
 })
 </script>
+
+<template>
+  <v-container class="py-10">
+    <v-btn @click="dialog = true" class="mb-4">Add Wish</v-btn>
+    <User />
+    <WishList class="mt-4"/>
+
+    <v-dialog v-model="dialog" width="500">
+      <EditWishForm />
+    </v-dialog>
+  </v-container>
+</template>

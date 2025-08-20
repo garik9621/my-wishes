@@ -16,6 +16,8 @@ export interface CreateWishData {
   description?: string
   price: number
   priority: 'low' | 'medium' | 'high'
+  link: string
+  image: string
 }
 
 export interface UpdateWishData {
@@ -24,4 +26,6 @@ export interface UpdateWishData {
   price?: number
   priority?: 'low' | 'medium' | 'high'
   isCompleted?: boolean
+  link: string
+  image: string
 }

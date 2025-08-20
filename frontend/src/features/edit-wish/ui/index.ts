@@ -1,0 +1,1 @@
+export { default as EditWishForm } from './EditWishForm.vue'

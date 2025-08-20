@@ -56,6 +56,8 @@ export const useWishStore = defineStore('wish', () => {
     }
 
     return wishes.value[wishIndex]
+
+    // TODO: add request to backend
   }
 
   const deleteWish = (id: string) => {
@@ -65,6 +67,8 @@ export const useWishStore = defineStore('wish', () => {
     }
 
     wishes.value.splice(wishIndex, 1)
+
+    // TODO: add request to backend
   }
 
   const toggleWishCompletion = (id: string) => {
@@ -146,7 +150,13 @@ export const useWishStore = defineStore('wish', () => {
   const saveWish = async (wishData: CreateWishData) => {
     isLoading.value = true
     error.value = null
-    
+
+    addWish(wishData)
+
+    isLoading.value = false;
+
+    return;
+
     try {
       // TODO: Replace with actual API call
       const response = await fetch('/api/wishes', {
