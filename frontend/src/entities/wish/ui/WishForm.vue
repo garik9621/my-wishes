@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Reactive, reactive } from 'vue';
+import { Reactive, reactive, useTemplateRef } from 'vue';
 import { CreateWishData, Wish } from '../model/types';
 
 const emit = defineEmits<{
-    (e: 'submit', value: CreateWishData)
+    (e: 'submit', value: CreateWishData): void
 }>();
 
 const {
@@ -12,16 +12,25 @@ const {
   wish?: Wish
 }>()
 
+const formRef = useTemplateRef('form');
+
 const form: Reactive<CreateWishData> = reactive({
     title: wish?.title || '',
     description: wish?.description || '',
     price: wish?.price || 0,
     link: wish?.link || '',
     image: wish?.image || '',
+    priority: 'low',
 })
 
-const submit = () => {
+const submit = async () => {
+    const isFormValid = await formRef.value.validate();
 
+    if (!isFormValid) {
+        return;
+    }
+
+    emit('submit', form);
 }
 </script>
 
@@ -30,7 +39,7 @@ const submit = () => {
     <v-card class="pa-4">
         <v-card-title>Add Wish</v-card-title>
         <v-card-text>
-            <v-form @submit.prevent>
+            <v-form ref="form" @submit.prevent>
                 <v-text-field v-model="form.title" :rules="[]" label="Title" />
                 <v-text-field v-model="form.description" :rules="[]" label="Description" />
                 <v-text-field v-model="form.price" :rules="[]" label="Price" />
@@ -39,7 +48,7 @@ const submit = () => {
             </v-form>
         </v-card-text>
         <v-card-actions>
-            <v-btn @click="submit"></v-btn>Add</v-btn>
+            <v-btn @click="submit">Submit</v-btn>
         </v-card-actions>
     </v-card>
   </div>
