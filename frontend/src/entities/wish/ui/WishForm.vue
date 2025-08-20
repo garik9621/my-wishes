@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Reactive, reactive, useTemplateRef } from 'vue';
 import { CreateWishData, Wish } from '../model/types';
+import { useRules } from 'vuetify/labs/rules'
 
 const emit = defineEmits<{
-    (e: 'submit', value: CreateWishData): void
+  (e: 'submit', value: CreateWishData): void
 }>();
 
 const {
@@ -12,44 +13,37 @@ const {
   wish?: Wish
 }>()
 
+const rules = useRules()
+
 const formRef = useTemplateRef('form');
 
-const form: Reactive<CreateWishData> = reactive({
-    title: wish?.title || '',
-    description: wish?.description || '',
-    price: wish?.price || 0,
-    link: wish?.link || '',
-    image: wish?.image || '',
-    priority: 'low',
+const formData: Reactive<CreateWishData> = reactive({
+  title: wish?.title || '',
+  description: wish?.description || '',
+  price: wish?.price || 0,
+  link: wish?.link || '',
+  image: wish?.image || '',
+  priority: 'low',
 })
 
 const submit = async () => {
-    const isFormValid = await formRef.value.validate();
+  await formRef.value.validate();
 
-    if (!isFormValid) {
-        return;
-    }
+  if (!formRef.value.isValid) {
+    return;
+  }
 
-    emit('submit', form);
+  emit('submit', formData);
 }
 </script>
 
 <template>
-  <div>
-    <v-card class="pa-4">
-        <v-card-title>Add Wish</v-card-title>
-        <v-card-text>
-            <v-form ref="form" @submit.prevent>
-                <v-text-field v-model="form.title" :rules="[]" label="Title" />
-                <v-text-field v-model="form.description" :rules="[]" label="Description" />
-                <v-text-field v-model="form.price" :rules="[]" label="Price" />
-                <v-text-field v-model="form.link" :rules="[]" label="Link" />
-                <v-text-field v-model="form.image" :rules="[]" label="Image" />
-            </v-form>
-        </v-card-text>
-        <v-card-actions>
-            <v-btn @click="submit">Submit</v-btn>
-        </v-card-actions>
-    </v-card>
-  </div>
+  <v-form ref="form" @submit.prevent>
+    <v-text-field v-model="formData.title" :rules="[rules.required()]" label="Title" />
+    <v-text-field v-model="formData.description" :rules="[rules.required()]" label="Description" />
+    <v-text-field v-model="formData.price" :rules="[rules.required()]" label="Price" />
+    <v-text-field v-model="formData.link" :rules="[rules.required()]" label="Link" />
+    <v-text-field v-model="formData.image" :rules="[rules.required()]" label="Image" />
+    <v-btn color="primary" class="mt-4" @click="submit">Submit</v-btn>
+  </v-form>
 </template>

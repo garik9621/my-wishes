@@ -37,6 +37,9 @@ onMounted(() => {
   </v-row>
 
   <v-dialog v-model="isEditWishDialogVisible" width="500">
-    <EditWishForm :wish="wishToEdit" />
+    <EditWishForm 
+      :wish="wishToEdit" 
+      @success="isEditWishDialogVisible = false"
+    />
   </v-dialog>
 </template>

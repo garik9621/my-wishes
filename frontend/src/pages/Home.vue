@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { User } from '@entities/user'
 import { WishList } from '@entities/wish'
-import { EditWishForm } from '@features/edit-wish'
+import { AddWishForm } from '@features/add-wish'
 const message = ref<string>('')
 const loading = ref<boolean>(true)
 const dialog = ref<boolean>(false)
@@ -26,7 +26,7 @@ onMounted(async () => {
     <WishList class="mt-4"/>
 
     <v-dialog v-model="dialog" width="500">
-      <EditWishForm />
+      <AddWishForm @success="dialog = false" />
     </v-dialog>
   </v-container>
 </template>

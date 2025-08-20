@@ -1,29 +1,23 @@
 <script setup lang="ts">
-import type { Wish, CreateWishData } from '@entities/wish';
 import { WishForm, useWishStore } from '@entities/wish';
+import type { CreateWishData } from '@entities/wish';
 
 const emit = defineEmits<{
   (e: 'success'): void
 }>();
 
-const {
-  wish
-} = defineProps<{
-  wish?: Wish
-}>()
-
 const wishStore = useWishStore();
 
 const onSubmit = async (wishData: CreateWishData) => { 
-  await wishStore.updateWish(wish.id, wishData);
+  await wishStore.addWish(wishData);
 
-  emit('success')
+  emit('success');
 }
 </script>
 
 <template>
   <v-card class="pa-4">
-    <v-card-title>Edit Wish</v-card-title>
+    <v-card-title>Add Wish</v-card-title>
     <v-card-text>
       <WishForm :wish @submit="onSubmit" />
     </v-card-text>
